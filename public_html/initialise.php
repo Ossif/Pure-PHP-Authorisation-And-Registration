@@ -1,8 +1,12 @@
 <?php
+//Код инициализации базы данных - 
+
 //Дебаг
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once 'config.php';
 
 // Подключение к MySQL
 $conn = new mysqli('localhost', 'root', '', '');
@@ -13,15 +17,15 @@ if ($conn->connect_error) {
 }
 
 // Создание базы данных, если она не существует
-$sql = "CREATE DATABASE IF NOT EXISTS php_db";
+$sql = "CREATE DATABASE IF NOT EXISTS " . getenv('DB_NAME');
 if ($conn->query($sql) === TRUE) {
-    echo "База данных php_db успешно создана или уже существует.<br>";
+    echo "База данных " . getenv('DB_NAME') . " успешно создана или уже существует.<br>";
 } else {
     echo "Ошибка создания базы данных: " . $conn->error . "<br>";
 }
 
 // Использование базы данных
-$conn->select_db('php_db');
+$conn->select_db(getenv('DB_NAME'));
 
 // Создание таблицы, если она не существует
 $sql = "CREATE TABLE IF NOT EXISTS users (

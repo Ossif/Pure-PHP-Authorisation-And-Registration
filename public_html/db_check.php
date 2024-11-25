@@ -1,24 +1,5 @@
 <?php
-// Функция получения информации о БД из файла .env
-function loadEnv($filePath) {
-    if (!file_exists($filePath)) {
-        return;
-    }
-
-    $lines = file($filePath);
-    foreach ($lines as $line) {
-        if (trim($line) === '' || strpos(trim($line), '#') === 0) {
-            continue;
-        }
-
-        list($key, $value) = explode('=', trim($line), 2);
-        $key = trim($key);
-        $value = trim($value);
-
-        putenv("$key=$value");
-        $_ENV[$key] = $value; 
-    }
-}
+require_once 'config.php';
 
 loadEnv(__DIR__ . '/.env');
 
